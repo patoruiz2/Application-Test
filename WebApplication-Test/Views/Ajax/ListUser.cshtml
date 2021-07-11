@@ -1,0 +1,44 @@
+﻿@model  List<WebApplication_Test.Models.Model_Test>
+@{
+    ViewBag.Title = "ListUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Lista de usuarios</h2>
+
+
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-xs-1 table-bordered text-center"><b>ID</b></div>
+        <div class="col-xs-1 table-bordered text-center"><b>NOMBRE</b></div>
+        <div class="col-xs-1 table-bordered text-center"><b>APELLIDO</b></div>
+        <div class="col-xs-1 table-bordered text-center"><b>EDAD</b></div>
+        <div class="col-xs-1 table-bordered text-center"><b>DNI</b></div>
+    </div>
+
+    foreach (var items in Model)
+    {
+        <div class="row ">
+
+            <div class="col-xs-1 table-bordered text-center">@items.Id</div>
+            <div class="col-xs-1 table-bordered text-center">@items.Name</div>
+            <div class="col-xs-1 table-bordered text-center">@items.LastName</div>
+            <div class="col-xs-1 table-bordered text-center">@items.Age</div>
+            <div class="col-xs-1 table-bordered text-center">@items.Dni</div>
+
+        </div>
+    }
+
+}
+else
+{
+    if (ViewBag.Message != null)
+    {
+        <h1 class="text-danger">@ViewBag.Message</h1>
+    }
+    else
+    {
+        <h1 class="text-danger">@ViewBag.Error</h1>
+    }
+}

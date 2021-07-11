@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <h2>Consulta</h2>
+    <div style="margin:15px 0px 0px 0px">
+        <input id="name" class="form-control" type="text" placeholder="Nombre" />
+    </div>
+
+    <div style="margin:15px 0px 15px 0px">
+        <input id="lastName" class="form-control" type="text" placeholder="Apellido" />
+
+    </div>
+    <div>
+        <button type="submit" id="btn-send" class="btn-primary">Enviar</button>
+
+    </div>
+
+</div>
+
+<div id="result">
+
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#btn-send").click(function () {
+                $.ajax({
+                    url: '@Url.Action("GetUser","Ajax")',
+                    type: 'POST',
+                    data: {
+                        Name: $("#name").val(),
+                        LastName: $("#lastName").val()
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        
+                        if (data != false) {
+                            var result = "";
+                            localStorage.setItem("User", JSON.stringify(data));
+                            console.log(data);
+
+                            result += `
+                                    </br><p><b>Nombre:</b> ${data.Name}</p>
+                                    </br><p><b>Apellido:</b> ${data.LastName}</p>
+                                    </br><p><b>Edad:</b> ${data.Age}</p>
+                                    </br><p><b>DNI:</b> ${data.Dni}</p>
+                                        `
+                          
+
+                            document.getElementById("result").innerHTML = result;
+
+                        } else {
+                            alert('Los registros no coinciden con los datos ingresados o no existen')
+                        }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        alert(" " + errorThrown + " " + "Status: "+JSON.stringify(xhr.status));
+                    }
+                    
+
+                })
+            })
+        })
+    </script>
+    }
